@@ -4,18 +4,41 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --background-dark: #141332;
+  --foreground: #81cff0;
+  --foreground-dark: #1D1D41;
+  --text-dark: #FFF;
+  --text: #000;
+  --activ: #6359E9;
+  --text-gray: #A6A6A6;
+  --income: #64CFF6;
+  --outcome: #6359E9;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #F9FAFB;
+    /* --background-dark: #141332;  */
+    /* --foreground: #ededed;  */
   }
+}
+
+*{
+  @apply transition-colors duration-700;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+@layer components{
+  .activ{
+    @apply bg-activ;
+  }
+  .nav-button{
+    @apply flex w-[250px] h-[60px] rounded-[10px] items-center pl-4 gap-3;
+  }
 }
