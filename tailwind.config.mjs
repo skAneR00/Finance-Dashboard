@@ -20,6 +20,7 @@ export default {
         text_gray: "var(--text-gray)",
         income: "var(--income)",
         outcome: "var(--outcome)",
+        foreground_text: "var(--foreground-text)",
 
       },
     },

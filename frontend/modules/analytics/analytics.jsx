@@ -62,11 +62,31 @@ export default function Analytics() {
                     scales: {
                         x: {
                             stacked: false, // Отключаем "стек" (чтобы не накладывались друг на друга)
+                            grid: {
+                                color: "#8C89B450"
+                            },
+                            ticks: {
+                                color: "#8C89B4"
+                            }
                         },
                         y: {
                             beginAtZero: true,
+                            grid: {
+                                color: "#8C89B450"
+                            },
+                            ticks: {
+                                color: "#8C89B4"
+                            }
                         },
                     },
+                    plugins: {
+                        tooltip: {
+                            backgroundColor: "#464687"
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
                 },
             });
         }
@@ -93,7 +113,7 @@ export default function Analytics() {
                     </p>
                 </div>
             </section>
-            <section className="w-full h-[300px]">
+            <section className="w-full h-[300px] mt-3">
                 <canvas ref={chartRef}></canvas>
             </section>
         </section>

@@ -7,12 +7,13 @@
 
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Nav() {
     const [active, setActive] = useState("Dashboard");
     const [isDarkMode, setIsDarkMode] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
     const navItems = [
         { label: "Dashboard", icon: "/image/dashboard.svg" },
@@ -23,7 +24,12 @@ export default function Nav() {
     const downNavItems = [
         {label: "Security", icon: "/image/security.svg"},
         {label: "Help Centre", icon: "/image/help.svg"}
-    ]
+    ];
+
+    const accounts = [
+        {name:"Yuriy", avatar:"/image/avatar.png"}, 
+        {name:"Test", avatar:"/image/avatar.png"}
+    ];
 
     // Загружаем тему из localStorage
     useEffect(() => {
@@ -46,6 +52,18 @@ export default function Nav() {
         localStorage.setItem("theme", newTheme);
         document.documentElement.classList.toggle("dark", newTheme === "dark");
     };
+
+    // Закрытие Dropdown с аккаунтами при клике вне
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     return (
         <section className="flex flex-col items-center justify-around w-1/5 h-screen dark:bg-foreground_dark bg-foreground rounded-e-2xl">
@@ -133,29 +151,58 @@ export default function Nav() {
 
             */}
 
-            <section className="flex items-center justify-between nav-button">
-                <div className="flex items-center gap-3" onClick={() => setIsOpen(!isOpen)}>
-                    <Image
-                        src="/image/avatar.png"
-                        width={60}
-                        height={60}
-                        alt="Avatar"
-                        className="rounded-full"
-                    />
-                    <div className="cursor-pointer">
-                        <p className="text-text dark:text-text_dark font-bold">Yuriy</p>
-                        <span className="text-text dark:text-text_dark">Frontend Dev</span>
+            <div className="relative" ref={dropdownRef}>
+                {/* 🔘 Кнопка */}
+                <section className="flex items-center justify-between nav-button" onClick={() => setIsOpen(!isOpen)}>
+                    <div className="flex items-center gap-3 cursor-pointer">
+                        <Image
+                            src="/image/avatar.png"
+                            width={60}
+                            height={60}
+                            alt="Avatar"
+                            className="rounded-full"
+                        />
+                        <div>
+                            <p className="text-text dark:text-text_dark font-bold">Yuriy</p>
+                            <span className="text-text dark:text-text_dark">Frontend Dev</span>
+                        </div>
                     </div>
-                </div>
-                <Image 
-                    src="/image/arrow.svg"
-                    width={12}
-                    height={7}
-                    alt="arrow"
-                    className={`transition-all duration-300 cursor-pointer ${isOpen ? "rotate-180" : ""}`}
-                    onClick={() => setIsOpen(!isOpen)}
-                />
-            </section>
+                    <Image
+                        src="/image/arrow.svg"
+                        width={12}
+                        height={7}
+                        alt="arrow"
+                        className={`transition-all duration-300 cursor-pointer ${isOpen ? "rotate-180" : ""}`}
+                    />
+                </section>
+
+                {/* ⬆️ Выпадающее меню */}
+                {isOpen && (
+                    <div className="absolute flex-col bottom-[100%] mb-2 w-full px-1 bg-white dark:bg-background_dark rounded-xl shadow-lg py-2 z-50">
+                        {/* ➕ Добавить аккаунт */}
+                        <div className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-foreground_dark cursor-pointer text-primary font-semibold">
+                            ➕ Добавить аккаунт
+                        </div>
+
+                        {/* Список аккаунтов */}
+                        {accounts.map((account, index) => (
+                            <div
+                                key={index}
+                                className="flex mt-2 gap-2 px-4 py-2 text-text dark:text-text_dark hover:bg-gray-100 dark:hover:bg-foreground_dark cursor-pointer"
+                            >
+                                <Image
+                                    className="rounded-full"
+                                    src={account.avatar}
+                                    width={32}
+                                    height={32}
+                                    alt="avatar"
+                                ></Image>
+                                {account.name}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
     </section >
   );
 }

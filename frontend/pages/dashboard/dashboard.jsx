@@ -9,9 +9,9 @@ export default function Dashboard() {
 
 
     return (
-        <section className="flex flex-col w-3/4 h-full bg-transparent">
+        <section className="flex flex-col w-4/5 h-full bg-transparent">
             <DashboardHeader />
-            <section className="flex px-6">
+            <section className="flex px-6 gap-6">
                 <DashboardMain />
                 <DashboardArticle />
             </section>
