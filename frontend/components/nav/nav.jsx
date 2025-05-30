@@ -147,7 +147,7 @@ export default function Nav() {
 
             {/* 
             
-                Need to change - Dropdown, Ability to add accs in dropdown. 
+                Need to change - Ability to add accs in dropdown. 
 
             */}
 
@@ -181,7 +181,7 @@ export default function Nav() {
                     <div className="absolute flex-col bottom-[100%] mb-2 w-full px-1 bg-white dark:bg-background_dark rounded-xl shadow-lg py-2 z-50">
                         {/* ➕ Добавить аккаунт */}
                         <div className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-foreground_dark cursor-pointer text-primary font-semibold">
-                            ➕ Добавить аккаунт
+                            ➕ Add Account
                         </div>
 
                         {/* Список аккаунтов */}

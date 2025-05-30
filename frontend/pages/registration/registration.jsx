@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Registration() {
+    const router = useRouter(); // ← хук для навигации
     const [isRegister, setIsRegister] = useState(true);
     const [form, setForm] = useState({
         username: "",
@@ -18,10 +20,20 @@ export default function Registration() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const url = isRegister ? "http://localhost:4000/api/auth/register" : "http://localhost:4000/api/auth/login";
+        const url = isRegister
+            ? "http://localhost:4000/api/auth/register"
+            : "http://localhost:4000/api/auth/login";
+
         const payload = isRegister
-            ? { username: form.username, email: form.email, password: form.password }
-            : { identifier: form.identifier, password: form.password };
+            ? {
+                username: form.username,
+                email: form.email,
+                password: form.password,
+            }
+            : {
+                identifier: form.identifier,
+                password: form.password,
+            };
 
         try {
             const res = await fetch(url, {
@@ -31,9 +43,10 @@ export default function Registration() {
             });
 
             const data = await res.json();
-            if (res.ok) {
-                alert(`✅ ${isRegister ? "Регистрация" : "Авторизация"} успешна`);
-                console.log(data);
+
+            if(res.ok) {
+                localStorage.setItem("user", JSON.stringify(data.user)); // сохраняем пользователя
+                router.push("/dashboard");
             } else {
                 alert(`❌ Ошибка: ${data.error || "что-то пошло не так"}`);
             }
