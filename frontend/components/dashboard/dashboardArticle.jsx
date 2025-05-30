@@ -7,7 +7,7 @@ import Cards from "@/frontend/modules/cards/cards";
 export default function DashboardArticle(){
 
     return(
-        <section className="flex flex-col gap-6">
+        <section className="flex flex-col gap-4">
             <Cards />
             <Activity />
         </section>

@@ -27,7 +27,7 @@ export default function Statistics({type}){
             <div className="flex flex-col ml-4 flex-1">
                 <span className="text-text_gray text-sm">Total {type}</span>
                 <div className="flex justify-between w-full">
-                    <p className="text-text dark:text-text_dark text-lg">$632.000</p>
+                    <p className="text-text dark:text-text_dark text-lg">$632</p>
                     <span className={type == "Income" ? "text-[#02B15A] bg-[#02B15A15] rounded-lg py-1 px-3 text-sm" : "text-[#E41414] bg-[#E4141415] rounded-lg py-1 px-3 text-sm"}>{type == "Income" ? "+" : "-"}1.29%</span>
                 </div>
             </div>

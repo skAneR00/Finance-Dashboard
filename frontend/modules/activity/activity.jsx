@@ -64,14 +64,14 @@ export default function Activity(){
 
 
     return (
-        <div className="flex flex-col dark:bg-foreground_dark bg-foreground p-5 gap-3 rounded-2xl">
+        <div className="flex flex-col dark:bg-foreground_dark bg-foreground px-5 py-3 gap-3 rounded-2xl">
             <div>
-                <p className="text-white text-2xl">Activity</p>
+                <p className="text-white text-xl">Activity</p>
                 
                 {/* Month picker */}
 
             </div>
-            <div className="relative h-[180px]">
+            <div className="relative h-[100px]">
                 <canvas ref={chartRef}></canvas>
                 {/* Центр */}
                 <div className="absolute inset-0 flex items-center justify-center">
