@@ -76,7 +76,7 @@ npx prisma studio
 
 ```
 ├── app/                      # Next.js App Router
-│   ├── dashboard/            # Страница дашборда
+│   ├── main/                 # Главная страница со всеми страницами (Dashboard, Accounts и т.д.)
 │   ├── registration/         # Страница авторизации
 │   └── layout.jsx            # Общий layout
 ├── frontend/                 # Интерфейс и компоненты
