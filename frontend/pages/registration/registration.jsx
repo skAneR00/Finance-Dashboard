@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Registration() {
-    const router = useRouter(); // ← хук для навигации
+    const router = useRouter();
     const [isRegister, setIsRegister] = useState(true);
     const [form, setForm] = useState({
         username: "",
@@ -12,6 +12,14 @@ export default function Registration() {
         password: "",
         identifier: "",
     });
+
+    // ✅ Если пользователь уже залогинен, редиректим на /dashboard
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        if (user) {
+            router.push("/dashboard");
+        }
+    }, []);
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -44,8 +52,10 @@ export default function Registration() {
 
             const data = await res.json();
 
-            if(res.ok) {
-                localStorage.setItem("user", JSON.stringify(data.user)); // сохраняем пользователя
+            if (res.ok) {
+                // ✅ Удаляем пароль из сохранения
+                const { password, ...safeUser } = data.user;
+                localStorage.setItem("user", JSON.stringify(safeUser));
                 router.push("/dashboard");
             } else {
                 alert(`❌ Ошибка: ${data.error || "что-то пошло не так"}`);

@@ -8,18 +8,21 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { useUser } from "../../context/UserContext";
 
 export default function Nav() {
+    const { user } = useUser();
+
     const [active, setActive] = useState("Dashboard");
     const [isDarkMode, setIsDarkMode] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     const navItems = [
-        { label: "Dashboard", icon: "/image/dashboard.svg" },
-        { label: "Analytics", icon: "/image/analytics.svg" },
-        { label: "My Wallet", icon: "/image/wallet.svg" },
-        { label: "Accounts", icon: "/image/profile.svg" },
+        { label: "Dashboard", icon: "/image/dashboard.svg", href: "dashboard" },
+        { label: "Analytics", icon: "/image/analytics.svg" , href: "analytics"},
+        { label: "My Wallet", icon: "/image/wallet.svg", href: "wallet" },
+        { label: "Accounts", icon: "/image/profile.svg", href: "accounts" },
     ];
     const downNavItems = [
         {label: "Security", icon: "/image/security.svg"},
@@ -81,7 +84,7 @@ export default function Nav() {
                         {navItems.map((item) => (
                             <a
                                 key={item.label}
-                                href="#"
+                                href={item.href}
                                 className={`nav-button text-text dark:text-text_dark ${active === item.label ? "activ" : ""}`}
                                 onClick={() => setActive(item.label)}
                             >
@@ -163,8 +166,12 @@ export default function Nav() {
                             className="rounded-full"
                         />
                         <div>
-                            <p className="text-text dark:text-text_dark font-bold">Yuriy</p>
-                            <span className="text-text dark:text-text_dark">Frontend Dev</span>
+                            <p className="text-text dark:text-text_dark font-bold">
+                                {user?.username || "Гость"}
+                            </p>
+                            <span className="text-text dark:text-text_dark">
+                                {user ? "Пользователь" : "Не вошёл"}
+                            </span>
                         </div>
                     </div>
                     <Image

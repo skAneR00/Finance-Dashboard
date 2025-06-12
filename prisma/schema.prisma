@@ -8,19 +8,52 @@ datasource db {
   shadowDatabaseUrl = ""
 }
 
-model Transaction {
-  id        Int      @id @default(autoincrement())
-  type      String
-  amount    Float
-  category  String
-  comment   String?
-  createdAt DateTime @default(now())
-  userId    Int
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String   @unique
+  password String
+
+  accounts Account[]
 }
 
-model User {
-  id       Int     @id @default(autoincrement())
-  username String  @unique
-  email    String  @unique
-  password String
+model Account {
+  id      Int      @id @default(autoincrement())
+  name    String
+  hobby   String?
+
+  user    User     @relation(fields: [userId], references: [id])
+  userId  Int
+
+  cards   Card[]
 }
+
+model Card {
+  id         Int           @id @default(autoincrement())
+  number     String        @unique
+  operator   String        // например: Visa, Mastercard, Мир и т.д.
+
+  account    Account       @relation(fields: [accountId], references: [id])
+  accountId  Int
+
+  transactions Transaction[]
+}
+
+model Transaction {
+  id         Int       @id @default(autoincrement())
+  type       TransactionType
+  amount     Float
+  date       DateTime  @default(now())
+  source     String
+  comment    String?
+  category   String
+
+  card       Card      @relation(fields: [cardId], references: [id])
+  cardId     Int
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
